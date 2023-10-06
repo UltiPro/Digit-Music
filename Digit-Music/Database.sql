@@ -48,7 +48,7 @@ CREATE TABLE [Track]
 (
     Id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
     Name NVARCHAR(200) NOT NULL,
-    Album_Id INT NOT NULL,
+    Album_Id INT,
     MediaType_Id INT NOT NULL,
     Genre_Id INT NOT NULL,
     Duration TIME NOT NULL,
