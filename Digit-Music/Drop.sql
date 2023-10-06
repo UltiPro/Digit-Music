@@ -1,1 +1,3 @@
-DROP DATABASE [DigitMusic]
+USE MASTER
+GO
+DROP DATABASE [DigitMusic];
