@@ -15,7 +15,7 @@ CREATE TABLE [Album]
     Title NVARCHAR(255) NOT NULL
 )
 GO
-ALTER TABLE [Album] WITH CHECK ADD CONSTRAINT [Album_Artist_FK] FOREIGN KEY ([Artist_Id]) REFERENCES [Artist]([Id]) ON DELETE CASCADE
+ALTER TABLE [Album] WITH CHECK ADD CONSTRAINT [Album_Artist_FK] FOREIGN KEY ([Artist_Id]) REFERENCES [Artist]([Id])
 GO
 CREATE TABLE [Playlist]
 (
@@ -44,7 +44,6 @@ CREATE TABLE [Genre]
     Name NVARCHAR(200) NOT NULL UNIQUE
 )
 GO
-
 CREATE TABLE [Track]
 (
     Id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
@@ -54,85 +53,76 @@ CREATE TABLE [Track]
     Genre_Id INT NOT NULL,
     Duration TIME NOT NULL,
     Bytes INT NOT NULL,
-    Price SMALLMONEY NOT NULL,
-    Location NVARCHAR(260) NOT NULL
+    Price SMALLMONEY NOT NULL DEFAULT(5),
+    Location TEXT NOT NULL DEFAULT('./')
 )
 GO
-
-
-
-
-CREATE TABLE Employee
+ALTER TABLE [Track] WITH CHECK ADD CONSTRAINT [Track_Album_FK] FOREIGN KEY ([Album_Id]) REFERENCES [Album]([Id])
+GO
+ALTER TABLE [PlaylistTrack] WITH CHECK ADD CONSTRAINT [PlaylistTrack_Track_FK] FOREIGN KEY ([Track_Id]) REFERENCES [Track]([Id]) ON DELETE CASCADE
+GO
+ALTER TABLE [Track] WITH CHECK ADD CONSTRAINT [Track_MediaType_FK] FOREIGN KEY ([MediaType_Id]) REFERENCES [MediaType]([Id])
+GO
+ALTER TABLE [Track] WITH CHECK ADD CONSTRAINT [Track_Genre_FK] FOREIGN KEY ([Genre_Id]) REFERENCES [Genre]([Id])
+GO
+CREATE TABLE [InvoiceTrack]
 (
-    Id integer PRIMARY KEY,
-    FirstName varchar(255),
-    LastName varchar(255),
-    JobPosition varchar(255),
-    ReportsTo integer,
-    BirthDate timestamp,
-    HireDate timestamp,
-    Address varchar(255),
-    City varchar(255),
-    State varchar(255),
-    Country varchar(255),
-    PostalCode varchar(255),
-    Phone varchar(255),
-    Email varchar(255)
-)GO
-CREATE TABLE Customer
+    Id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    Invoice_Id INT NOT NULL,
+    Track_Id INT NOT NULL,
+    Quantity INT NOT NULL DEFAULT(1)
+)
+GO
+ALTER TABLE [InvoiceTrack] WITH CHECK ADD CONSTRAINT [InvoiceTrack_Track_FK] FOREIGN KEY ([Track_Id]) REFERENCES [Track]([Id])
+GO
+CREATE TABLE [Invoice]
 (
-    Id integer PRIMARY KEY,
-    FirstName varchar(255),
-    LastName varchar(255),
-    Company varchar(255),
-    Address varchar(255),
-    City varchar(255),
-    State varchar(255),
-    Country varchar(255),
-    PostalCode varchar(255),
-    Phone varchar(255),
-    Email varchar(255),
-    EmployeeSupport_id integer
-)GO
-CREATE TABLE Invoice
+    Id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    Customer_Id INT NOT NULL,
+    InvoiceDate DATETIME NOT NULL DEFAULT(GETDATE()),
+    BillingAddress NVARCHAR(256) NOT NULL,
+    BillingCity NVARCHAR(256) NOT NULL,
+    BillingState NVARCHAR(256) NOT NULL,
+    BillingCountry VARCHAR(128) NOT NULL,
+    BillingPostalCode VARCHAR(10) NOT NULL
+)
+GO
+ALTER TABLE [InvoiceTrack] WITH CHECK ADD CONSTRAINT [InvoiceTrack_Invoice_FK] FOREIGN KEY ([Invoice_Id]) REFERENCES [Invoice]([Id]) ON DELETE CASCADE
+GO
+CREATE TABLE [Employee]
 (
-    Id integer PRIMARY KEY,
-    Customer_Id integer,
-    InvoiceDate timestamp,
-    BillingAddress varchar(255),
-    BillingCity varchar(255),
-    BillingState varchar(255),
-    BillingCountry varchar(255),
-    BillingPostalCode varchar(255),
-    Total integer
-)GO
-CREATE TABLE InvoiceLine
+    Id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    FirstName NVARCHAR(100) NOT NULL,
+    LastName NVARCHAR(100) NOT NULL,
+    JobPosition NVARCHAR(100) NOT NULL,
+    ReportsTo_Id INT,
+    BirthDate DATETIME NOT NULL,
+    HireDate DATETIME NOT NULL DEFAULT(GETDATE()),
+    Address NVARCHAR(256) NOT NULL,
+    City NVARCHAR(256) NOT NULL,
+    State NVARCHAR(256) NOT NULL,
+    Country VARCHAR(128) NOT NULL,
+    PostalCode VARCHAR(10) NOT NULL,
+    Phone VARCHAR(15) NOT NULL UNIQUE,
+    Email NVARCHAR(320) NOT NULL UNIQUE
+)
+GO
+ALTER TABLE [Employee] WITH CHECK ADD CONSTRAINT [Employee_Employee_FK] FOREIGN KEY ([ReportsTo_Id]) REFERENCES [Employee]([Id])
+GO
+CREATE TABLE [Customer]
 (
-    Id integer PRIMARY KEY,
-    Invoice_Id integer,
-    Track_Id integer,
-    Price integer,
-    Quantity integer
-)GO
-
-
-
-ALTER TABLE Track ADD FOREIGN KEY (Album_Id) REFERENCES Album (Id);
-
-ALTER TABLE PlaylistTrack ADD FOREIGN KEY (Playlist_Id) REFERENCES Playlist (Id);
-
-ALTER TABLE PlaylistTrack ADD FOREIGN KEY (Track_Id) REFERENCES Track (Id);
-
-ALTER TABLE Track ADD FOREIGN KEY (MediaType_Id) REFERENCES MediaType (Id);
-
-ALTER TABLE Track ADD FOREIGN KEY (Genre_Id) REFERENCES Genre (Id);
-
-ALTER TABLE Employee ADD FOREIGN KEY (ReportsTo) REFERENCES Employee (Id);
-
-ALTER TABLE Customer ADD FOREIGN KEY (EmployeeSupport_id) REFERENCES Employee (Id);
-
-ALTER TABLE Invoice ADD FOREIGN KEY (Customer_Id) REFERENCES Customer (Id);
-
-ALTER TABLE InvoiceLine ADD FOREIGN KEY (Invoice_Id) REFERENCES Invoice (Id);
-
-ALTER TABLE InvoiceLine ADD FOREIGN KEY (Track_Id) REFERENCES Track (Id);
+    Id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    NameOrFirm NVARCHAR(300) NOT NULL,
+    Address NVARCHAR(256) NOT NULL,
+    City NVARCHAR(256) NOT NULL,
+    State NVARCHAR(256) NOT NULL,
+    Country VARCHAR(128) NOT NULL,
+    PostalCode VARCHAR(10) NOT NULL,
+    Phone VARCHAR(15) NOT NULL UNIQUE,
+    Email NVARCHAR(320) NOT NULL UNIQUE,
+    EmployeeSupport_Id INT NOT NULL
+)
+GO
+ALTER TABLE [Customer] WITH CHECK ADD CONSTRAINT [Customer_Employee_FK] FOREIGN KEY ([EmployeeSupport_Id]) REFERENCES [Employee]([Id])
+GO
+ALTER TABLE [Invoice] WITH CHECK ADD CONSTRAINT [Invoice_Customer_FK] FOREIGN KEY ([Customer_Id]) REFERENCES [Customer]([Id]);
