@@ -122,4 +122,4 @@ VALUES
 INSERT INTO [InvoiceTrack]
     (Invoice_Id,Track_Id,Quantity)
 VALUES
-    (2, 2, 3)
+    (2, 2, 3);
