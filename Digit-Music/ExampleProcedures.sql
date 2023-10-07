@@ -21,7 +21,7 @@ BEGIN
     DELETE FROM Playlist WHERE Id = @PlaylistId
 END
 GO
-CREATE PROCEDURE [CountInvoicesCustomer]
+CREATE PROCEDURE [CountOfCustomerInvoice]
     (
     @CustomerId INT
 )
@@ -47,7 +47,7 @@ BEGIN
                                   WHERE E.FirstName = @EmployeeFirstName AND E.LastName = @EmployeeLastName);
 END
 GO
-CREATE PROCEDURE [GetPlaylistsNamesByTrack]
+CREATE PROCEDURE [GetPlaylistsByTrack]
     (
     @TrackId INT
 )
