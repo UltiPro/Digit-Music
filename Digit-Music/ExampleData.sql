@@ -11,9 +11,9 @@ VALUES
     ('Test "Test" Test')
 GO
 INSERT INTO [Album]
-    (Artist_Id,Title)
+    (Artist_Id,Title,Release_Date)
 VALUES
-    (1, 'Hello World!')
+    (1, 'Hello World!', GETDATE())
 GO
 INSERT INTO [Album]
     (Artist_Id,Title)
@@ -43,7 +43,7 @@ GO
 INSERT INTO [Genre]
     (Name)
 VALUES
-    ('POP')
+    ('Pop')
 GO
 INSERT INTO [Genre]
     (Name)
@@ -51,14 +51,14 @@ VALUES
     ('Rock')
 GO
 INSERT INTO [Track]
-    (Name,Album_Id,MediaType_Id,Genre_Id,Duration,Bytes,Price,Location)
+    (Name,Album_Id,MediaType_Id,Genre_Id,Release_Date,Duration,Bytes,Price,Location)
 VALUES
-    ('First Track', 1, 1, 1, '3:30', 3670016, 5.99, './music/')
+    ('First Track', 1, 1, 1, GETDATE(), '0:03:30', 3670016, 5.99, './music/')
 GO
 INSERT INTO [Track]
     (Name,MediaType_Id,Genre_Id,Duration,Bytes,Price)
 VALUES
-    ('Second Track', 1, 2, '3:00', 3670016, 3.99)
+    ('Second Track', 1, 2, '0:03:00', 3145728, 3.99)
 GO
 INSERT INTO [PlaylistTrack]
     (Playlist_Id,Track_Id)
