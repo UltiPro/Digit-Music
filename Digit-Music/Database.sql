@@ -98,7 +98,7 @@ CREATE TABLE [Employee]
     LastName NVARCHAR(100) NOT NULL,
     JobPosition NVARCHAR(100) NOT NULL,
     ReportsTo_Id INT,
-    BirthDate DATETIME NOT NULL,
+    BirthDate DATE NOT NULL,
     HireDate DATETIME NOT NULL DEFAULT(GETDATE()),
     Address NVARCHAR(256) NOT NULL,
     City NVARCHAR(256) NOT NULL,
