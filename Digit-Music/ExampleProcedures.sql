@@ -43,8 +43,8 @@ BEGIN
     SELECT *
     FROM Customer C
     WHERE C.EmployeeSupport_Id = (SELECT Id
-    FROM Employee E
-    WHERE E.FirstName = @EmployeeFirstName AND E.LastName = @EmployeeLastName);
+                                  FROM Employee E
+                                  WHERE E.FirstName = @EmployeeFirstName AND E.LastName = @EmployeeLastName);
 END
 GO
 CREATE PROCEDURE [GetPlaylistsNamesByTrack]
