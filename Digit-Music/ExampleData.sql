@@ -8,12 +8,12 @@ GO
 INSERT INTO [Artist]
     (Name)
 VALUES
-    ('Test "Test" Test')
+    ('Harry Edward Styles')
 GO
 INSERT INTO [Album]
     (Artist_Id,Title,Release_Date)
 VALUES
-    (1, 'Hello World!', GETDATE())
+    (1, 'Hello World 1!', GETDATE())
 GO
 INSERT INTO [Album]
     (Artist_Id,Title)
@@ -23,7 +23,7 @@ GO
 INSERT INTO [Playlist]
     (Name)
 VALUES
-    ('Best Playlist')
+    ('First Best Playlist')
 GO
 INSERT INTO [Playlist]
     (Name)
@@ -88,7 +88,7 @@ GO
 INSERT INTO [Customer]
     (NameOrFirm,Address,City,State,Country,PostalCode,Phone,Email,EmployeeSupport_Id)
 VALUES
-    ('FoxMusic', 'Street 10', 'New York', 'New York', 'USA', '10001', '7182223333', 'owner@fox-music.com', 2)
+    ('FoxMusic', 'Street 10', 'New York', 'New York', 'USA', '10001', '7182223333', 'owner@foxmusic.com', 2)
 GO
 INSERT INTO [Customer]
     (NameOrFirm,Address,City,State,Country,PostalCode,Phone,Email,EmployeeSupport_Id)
