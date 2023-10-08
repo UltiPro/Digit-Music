@@ -11,7 +11,7 @@ WHERE T.MediaType_Id = MT.Id AND (MT.Name = 'Audio' OR MT.Name = 'Video');
 -- Bosses and their employees
 SELECT E2.FirstName + ' ' + E2.LastName As 'Boss', E1.FirstName + ' ' + E1.LastName As 'Employee'
 FROM Employee E1, Employee E2
-WHERE E1.ReportsTo_Id = E2.Id AND E1.ReportsTo_Id > 0
+WHERE E1.ReportsTo_Id = E2.Id AND E1.ReportsTo_Id > 0;
 
 -- Count of invoices per customer
 SELECT C.NameOrFirm, COUNT(I.Id) AS 'Count of Invoices'
