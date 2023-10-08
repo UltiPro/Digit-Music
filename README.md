@@ -5,4 +5,4 @@ opis
 
 # Preview
 
-![Database Diagram Preview](./Digit-Music2.png)
+![Database Diagram Preview](./Digit-Music.png)
